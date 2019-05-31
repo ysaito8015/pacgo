@@ -1,13 +1,15 @@
-package main
+package screen
 
 import (
 	"fmt"
 	"log"
 	"os"
 	"os/exec"
+
+	"github.com/danicat/pacgo/stepxx/config"
 )
 
-func initialize() {
+func Init() {
 	cbTerm := exec.Command("/bin/stty", "cbreak", "-echo")
 	cbTerm.Stdin = os.Stdin
 
@@ -18,7 +20,7 @@ func initialize() {
 }
 
 // /bin/stty -cbreak echo
-func cleanup() {
+func Cleanup() {
 	cookedTerm := exec.Command("/bin/stty", "-cbreak", "echo")
 	cookedTerm.Stdin = os.Stdin
 
@@ -28,13 +30,13 @@ func cleanup() {
 	}
 }
 
-func clearScreen() {
+func Clear() {
 	fmt.Printf("\x1b[2J")
-	moveCursor(0, 0)
+	SetCursor(0, 0)
 }
 
-func moveCursor(row, col int) {
-	if cfg.UseEmoji {
+func SetCursor(row, col int) {
+	if config.UseEmoji() {
 		fmt.Printf("\x1b[%d;%df", row+1, col*2+1)
 	} else {
 		fmt.Printf("\x1b[%d;%df", row+1, col+1)

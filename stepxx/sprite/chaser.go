@@ -1,4 +1,4 @@
-package main
+package sprite
 
 // Chaser is a smart enemy! 0.0
 type Chaser struct {
