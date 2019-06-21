@@ -23,29 +23,30 @@ type Ghost struct {
 	col int
 }
 
-var ghosts []*Ghost
+var ghosts []*Ghost // HL
 
 func loadMaze() error {
-	f, err := os.Open("maze01.txt")
-	if err != nil {
-		return err
-	}
-	defer f.Close()
-
-	scanner := bufio.NewScanner(f)
-	for scanner.Scan() {
-		line := scanner.Text()
-		maze = append(maze, line)
-	}
+	f, err := os.Open("maze01.txt") // OMIT
+	if err != nil {                 // OMIT
+		return err // OMIT
+	} // OMIT
+	defer f.Close() // OMIT
+	// OMIT
+	scanner := bufio.NewScanner(f) // OMIT
+	for scanner.Scan() {           // OMIT
+		line := scanner.Text()    // OMIT
+		maze = append(maze, line) // OMIT
+	} // OMIT
+	// file load omitted...
 
 	for row, line := range maze {
 		for col, char := range line {
 			switch char {
 			case 'P':
 				player = Player{row, col}
-			case 'G':
-				ghosts = append(ghosts, &Ghost{row, col})
-			}
+			case 'G': // HL
+				ghosts = append(ghosts, &Ghost{row, col}) // HL
+			} // HL
 		}
 	}
 
@@ -80,10 +81,10 @@ func printScreen() {
 	moveCursor(player.row, player.col)
 	fmt.Printf("P")
 
-	for _, g := range ghosts {
-		moveCursor(g.row, g.col)
-		fmt.Printf("G")
-	}
+	for _, g := range ghosts { // HL
+		moveCursor(g.row, g.col) // HL
+		fmt.Printf("G")          // HL
+	} // HL
 }
 
 func readInput() (string, error) {
@@ -164,9 +165,9 @@ func drawDirection() string {
 }
 
 func moveGhosts() {
-	for _, g := range ghosts {
+	for _, g := range ghosts { // HL
 		dir := drawDirection()
-		g.row, g.col = makeMove(g.row, g.col, dir)
+		g.row, g.col = makeMove(g.row, g.col, dir) // HL
 	}
 }
 
@@ -201,21 +202,23 @@ func main() {
 		return
 	}
 
+	// START OMIT
 	// game loop
 	for {
-		// update screen
-		printScreen()
-
-		// process input
-		input, err := readInput()
-		if err != nil {
-			log.Printf("Error reading input: %v", err)
-			break
-		}
+		// update screen // OMIT
+		printScreen() // OMIT
+		// OMIT
+		// process input // OMIT
+		input, err := readInput() // OMIT
+		if err != nil {           // OMIT
+			log.Printf("Error reading input: %v", err) // OMIT
+			break                                      // OMIT
+		} // OMIT
+		// previous lines omitted...
 
 		// process movement
 		movePlayer(input)
-		moveGhosts()
+		moveGhosts() // HL
 
 		// process collisions
 
@@ -226,4 +229,5 @@ func main() {
 
 		// repeat
 	}
+	// END OMIT
 }

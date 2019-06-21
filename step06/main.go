@@ -232,7 +232,7 @@ func main() {
 			ch <- input
 		}
 	}(input)
-
+	// START OMIT
 	// game loop
 	for {
 		// process movement
@@ -246,7 +246,7 @@ func main() {
 		}
 
 		moveGhosts()
-
+		// END OMIT
 		// process collisions
 		for _, g := range ghosts {
 			if player.row == g.row && player.col == g.col {

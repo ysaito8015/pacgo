@@ -57,6 +57,8 @@ https://github.com/danicat/pacgo
 
 .code step02/main.go /^func clearScreen/,/^}/
 .code step02/main.go /^func moveCursor/,/^}/
+
+- Modify the `printScreen` function
 .code step02/main.go /^func printScreen/,/^}/
 
 * Step 02: Handle Input
@@ -70,11 +72,13 @@ https://github.com/danicat/pacgo
 
 * Step 02: Handle Input
 
-.code step02/main.go /^func main/,/load resources/
+At the `main` function:
+
+.code step02/main.go /START1 OMIT/,/END1 OMIT/
 
 * Step 02: Handle Input
 
-.code step02/main.go /game loop/,/^}/
+.code step02/main.go /START2 OMIT/,/END2 OMIT/
 
 * Step 03: Add the Player Character
 
@@ -94,17 +98,19 @@ https://github.com/danicat/pacgo
 
 * Step 03: Add the Player Character
 
-.code step03/main.go /case "LEFT"/,/^}/
-
 .code step03/main.go /^func movePlayer/,/^}/
 
 * Step 03: Add the Player Character
+
+- Revisiting the `printScreen` function:
 
 .code step03/main.go /^func printScreen/,/^}/
 
 * Step 03: Add the Player Character
 
-.code step03/main.go /process input/,/repeat/
+- Updating the game loop:
+
+.code step03/main.go /START4 OMIT/,/END4 OMIT/
 
 * Step 04: Add the Ghosts
 
@@ -112,9 +118,9 @@ https://github.com/danicat/pacgo
 
 * Step 04: Add the Ghosts
 
-- `loadMaze`:
+- In `loadMaze`:
 
-.code step04/main.go /for row, line/,/^}/
+.code step04/main.go /^func loadMaze/,/^}/
 
 * Step 04: Add the Ghosts
 
@@ -127,7 +133,7 @@ https://github.com/danicat/pacgo
 
 * Step 04: Add the Ghosts
 
-.code step04/main.go /process input/,/repeat/
+.code step04/main.go /START OMIT/,/END OMIT/
 
 * Step 05: Game Win and Game Over
 
@@ -135,9 +141,7 @@ https://github.com/danicat/pacgo
 
 * Step 05: Game Win and Game Over
 
-- `loadMaze`:
-
-.code step05/main.go /for row, line/,/^}/
+.code step05/main.go /START OMIT/,/END OMIT/
 
 * Step 05: Game Win and Game Over
 
@@ -157,7 +161,7 @@ https://github.com/danicat/pacgo
 
 * Step 06: Realtime!
 
-.code step06/main.go /process movement/,/repeat/
+.code step06/main.go /START OMIT/,/END OMIT/
 
 * Step 07: Finally, emojis!
 

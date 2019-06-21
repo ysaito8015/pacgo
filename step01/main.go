@@ -35,16 +35,16 @@ func main() {
 	// initialize game
 
 	// load resources
-	err := loadMaze()
-	if err != nil {
-		log.Printf("Error loading maze: %v\n", err)
-		return
+	err := loadMaze() // HL
+	if err != nil {   // HL
+		log.Printf("Error loading maze: %v\n", err) // HL
+		return                                      // HL
 	}
 
 	// game loop
 	for {
 		// update screen
-		printScreen()
+		printScreen() // HL
 
 		// process input
 

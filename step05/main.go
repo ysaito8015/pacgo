@@ -25,18 +25,20 @@ type Ghost struct {
 
 var ghosts []*Ghost
 
+// START OMIT
 func loadMaze() error {
-	f, err := os.Open("maze01.txt")
-	if err != nil {
-		return err
-	}
-	defer f.Close()
-
-	scanner := bufio.NewScanner(f)
-	for scanner.Scan() {
-		line := scanner.Text()
-		maze = append(maze, line)
-	}
+	f, err := os.Open("maze01.txt") // OMIT
+	if err != nil {                 // OMIT
+		return err // OMIT
+	} // OMIT
+	defer f.Close() // OMIT
+	// OMIT
+	scanner := bufio.NewScanner(f) // OMIT
+	for scanner.Scan() {           // OMIT
+		line := scanner.Text()    // OMIT
+		maze = append(maze, line) // OMIT
+	} // OMIT
+	// load maze omitted...
 
 	for row, line := range maze {
 		for col, char := range line {
@@ -45,14 +47,16 @@ func loadMaze() error {
 				player = Player{row, col}
 			case 'G':
 				ghosts = append(ghosts, &Ghost{row, col})
-			case '.':
-				numDots++
-			}
+			case '.': // HL
+				numDots++ // HL
+			} // HL
 		}
 	}
 
 	return nil
 }
+
+// END OMIT
 
 var maze []string
 var score int
@@ -68,33 +72,37 @@ func moveCursor(row, col int) {
 	fmt.Printf("\x1b[%d;%df", row+1, col+1)
 }
 
+// START2 OMIT
 func printScreen() {
 	clearScreen()
 	for _, line := range maze {
 		for _, chr := range line {
 			switch chr {
-			case '#':
-				fallthrough
-			case '.':
-				fmt.Printf("%c", chr)
+			case '#': // HL
+				fallthrough // HL
+			case '.': // HL
+				fmt.Printf("%c", chr) // HL
 			default:
 				fmt.Printf(" ")
 			}
 		}
 		fmt.Printf("\n")
 	}
-
-	moveCursor(player.row, player.col)
-	fmt.Printf("P")
-
-	for _, g := range ghosts {
-		moveCursor(g.row, g.col)
-		fmt.Printf("G")
-	}
-
-	moveCursor(len(maze)+1, 0)
-	fmt.Printf("Score: %v\tLives: %v\n", score, lives)
+	// OMIT
+	moveCursor(player.row, player.col) // OMIT
+	fmt.Printf("P")                    // OMIT
+	// OMIT
+	for _, g := range ghosts { // OMIT
+		moveCursor(g.row, g.col) // OMIT
+		fmt.Printf("G")          // OMIT
+	} // OMIT
+	// OMIT
+	moveCursor(len(maze)+1, 0)                         // OMIT
+	fmt.Printf("Score: %v\tLives: %v\n", score, lives) // OMIT
+	// lines omitted...
 }
+
+// END2 OMIT
 
 func readInput() (string, error) {
 	buffer := make([]byte, 100)
@@ -160,13 +168,13 @@ func makeMove(oldRow, oldCol int, dir string) (newRow, newCol int) {
 
 func movePlayer(dir string) {
 	player.row, player.col = makeMove(player.row, player.col, dir)
-	switch maze[player.row][player.col] {
-	case '.':
-		numDots--
-		score++
+	switch maze[player.row][player.col] { // HL
+	case '.': // HL
+		numDots-- // HL
+		score++   // HL
 		// Remove dot from the maze
-		maze[player.row] = maze[player.row][0:player.col] + " " + maze[player.row][player.col+1:]
-	}
+		maze[player.row] = maze[player.row][0:player.col] + " " + maze[player.row][player.col+1:] // HL
+	} // HL
 }
 
 func drawDirection() string {
@@ -235,14 +243,14 @@ func main() {
 		moveGhosts()
 
 		// process collisions
-		for _, g := range ghosts {
-			if player.row == g.row && player.col == g.col {
-				lives = 0
-			}
-		}
+		for _, g := range ghosts { // HL
+			if player.row == g.row && player.col == g.col { // HL
+				lives = 0 // HL
+			} // HL
+		} // HL
 
 		// check game over
-		if input == "ESC" || numDots == 0 || lives == 0 {
+		if input == "ESC" || numDots == 0 || lives == 0 { // HL
 			break
 		}
 

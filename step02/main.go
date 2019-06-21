@@ -36,28 +36,28 @@ func moveCursor(row, col int) {
 }
 
 func printScreen() {
-	clearScreen()
+	clearScreen() // HL
 	for _, line := range maze {
 		fmt.Println(line)
 	}
 }
 
 func readInput() (string, error) {
-	buffer := make([]byte, 100)
+	buffer := make([]byte, 100) // HL
 
 	cnt, err := os.Stdin.Read(buffer)
 	if err != nil {
 		return "", err
 	}
 
-	if cnt == 1 && buffer[0] == 0x1b {
+	if cnt == 1 && buffer[0] == 0x1b { // HL
 		return "ESC", nil
 	}
 
 	return "", nil
 }
 
-func init() {
+func init() { // HL
 	cbTerm := exec.Command("/bin/stty", "cbreak", "-echo")
 	cbTerm.Stdin = os.Stdin
 
@@ -77,9 +77,10 @@ func cleanup() {
 	}
 }
 
+// START1 OMIT
 func main() {
 	// initialize game
-	defer cleanup()
+	defer cleanup() // HL
 
 	// load resources
 	err := loadMaze()
@@ -88,27 +89,30 @@ func main() {
 		return
 	}
 
+	// START2 OMIT
 	// game loop
 	for {
+		// END1 OMIT
 		// update screen
 		printScreen()
 
 		// process input
-		input, err := readInput()
-		if err != nil {
-			log.Printf("Error reading input: %v", err)
-			break
-		}
+		input, err := readInput() // HL
+		if err != nil {           // HL
+			log.Printf("Error reading input: %v", err) // HL
+			break                                      // HL
+		} // HL
 
 		// process movement
 
 		// process collisions
 
 		// check game over
-		if input == "ESC" {
-			break
-		}
+		if input == "ESC" { // HL
+			break // HL
+		} // HL
 
 		// repeat
 	}
+	// END2 OMIT
 }

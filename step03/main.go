@@ -16,12 +16,14 @@ type Player struct {
 
 var player Player
 
+// START1 OMIT
 func loadMaze() error {
-	f, err := os.Open("maze01.txt")
-	if err != nil {
-		return err
-	}
-	defer f.Close()
+	// file open omitted...
+	f, err := os.Open("maze01.txt") // OMIT
+	if err != nil {                 // OMIT
+		return err // OMIT
+	} // OMIT
+	defer f.Close() // OMIT
 
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
@@ -29,17 +31,19 @@ func loadMaze() error {
 		maze = append(maze, line)
 	}
 
-	for row, line := range maze {
-		for col, char := range line {
-			switch char {
-			case 'P':
-				player = Player{row, col}
-			}
-		}
-	}
+	for row, line := range maze { // HL
+		for col, char := range line { // HL
+			switch char { // HL
+			case 'P': // HL
+				player = Player{row, col} // HL
+			} // HL
+		} // HL
+	} // HL
 
 	return nil
 }
+
+// END1 OMIT
 
 var maze []string
 
@@ -52,57 +56,64 @@ func moveCursor(row, col int) {
 	fmt.Printf("\x1b[%d;%df", row+1, col+1)
 }
 
+// START2 OMIT
 func printScreen() {
 	clearScreen()
-	for _, line := range maze {
-		for _, chr := range line {
-			switch chr {
-			case '#':
-				fmt.Printf("%c", chr)
-			default:
-				fmt.Printf(" ")
-			}
-		}
-		fmt.Printf("\n")
-	}
+	for _, line := range maze { // HL
+		for _, chr := range line { // HL
+			switch chr { // HL
+			case '#': // HL
+				fmt.Printf("%c", chr) // HL
+			default: // HL
+				fmt.Printf(" ") // HL
+			} // HL
+		} // HL
+		fmt.Printf("\n") // HL
+	} // HL
 
-	moveCursor(player.row, player.col)
-	fmt.Printf("P")
-
-	moveCursor(len(maze)+1, 0)
-	fmt.Printf("Row %v Col %v", player.row, player.col)
+	moveCursor(player.row, player.col) // HL
+	fmt.Printf("P")                    // HL
+	// OMIT
+	moveCursor(len(maze)+1, 0)                          // OMIT
+	fmt.Printf("Row %v Col %v", player.row, player.col) // OMIT
 }
 
-func readInput() (string, error) {
-	buffer := make([]byte, 100)
+// END2 OMIT
 
-	cnt, err := os.Stdin.Read(buffer)
-	if err != nil {
-		return "", err
-	}
+// START3 OMIT
+func readInput() (string, error) {
+	buffer := make([]byte, 100) // OMIT
+	// OMIT
+	cnt, err := os.Stdin.Read(buffer) // OMIT
+	if err != nil {                   // OMIT
+		return "", err // OMIT
+	} // OMIT
+	// lines omitted...
 
 	if cnt == 1 && buffer[0] == 0x1b {
 		return "ESC", nil
-	} else if cnt >= 3 {
-		if buffer[0] == 0x1b && buffer[1] == '[' {
-			switch buffer[2] {
-			case 'A':
-				return "UP", nil
-			case 'B':
-				return "DOWN", nil
-			case 'C':
-				return "RIGHT", nil
-			case 'D':
-				return "LEFT", nil
-			}
-		}
-	}
+	} else if cnt >= 3 { // HL
+		if buffer[0] == 0x1b && buffer[1] == '[' { // HL
+			switch buffer[2] { // HL
+			case 'A': // HL
+				return "UP", nil // HL
+			case 'B': // HL
+				return "DOWN", nil // HL
+			case 'C': // HL
+				return "RIGHT", nil // HL
+			case 'D': // HL
+				return "LEFT", nil // HL
+			} // HL
+		} // HL
+	} // HL
 
 	return "", nil
 }
 
+// END3 OMIT
+
 func makeMove(oldRow, oldCol int, dir string) (newRow, newCol int) {
-	newRow, newCol = oldRow, oldCol
+	newRow, newCol = oldRow, oldCol // HL
 
 	switch dir {
 	case "UP":
@@ -115,16 +126,17 @@ func makeMove(oldRow, oldCol int, dir string) (newRow, newCol int) {
 		if newRow == len(maze)-1 {
 			newRow = 0
 		}
-	case "RIGHT":
-		newCol = newCol + 1
-		if newCol == len(maze[0]) {
-			newCol = 0
-		}
-	case "LEFT":
-		newCol = newCol - 1
-		if newCol < 0 {
-			newCol = len(maze[0]) - 1
-		}
+		// omitted similar cases for RIGHT and LEFT...
+	case "RIGHT": // OMIT
+		newCol = newCol + 1         // OMIT
+		if newCol == len(maze[0]) { // OMIT
+			newCol = 0 // OMIT
+		} // OMIT
+	case "LEFT": // OMIT
+		newCol = newCol - 1 // OMIT
+		if newCol < 0 {     // OMIT
+			newCol = len(maze[0]) - 1 // OMIT
+		} // OMIT
 	}
 
 	if maze[newRow][newCol] == '#' {
@@ -132,7 +144,7 @@ func makeMove(oldRow, oldCol int, dir string) (newRow, newCol int) {
 		newCol = oldCol
 	}
 
-	return
+	return // HL
 }
 
 func movePlayer(dir string) {
@@ -170,20 +182,21 @@ func main() {
 		return
 	}
 
+	// START4 OMIT
 	// game loop
 	for {
 		// update screen
 		printScreen()
 
-		// process input
-		input, err := readInput()
-		if err != nil {
-			log.Printf("Error reading input: %v", err)
-			break
-		}
+		// process input (omitted)
+		input, err := readInput() // OMIT
+		if err != nil {           // OMIT
+			log.Printf("Error reading input: %v", err) // OMIT
+			break                                      // OMIT
+		} // OMIT
 
 		// process movement
-		movePlayer(input)
+		movePlayer(input) // HL
 
 		// process collisions
 
@@ -194,4 +207,5 @@ func main() {
 
 		// repeat
 	}
+	// END4 OMIT
 }

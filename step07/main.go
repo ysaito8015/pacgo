@@ -110,11 +110,11 @@ func printScreen() {
 		for _, chr := range line {
 			switch chr {
 			case '#':
-				fmt.Printf(cfg.Wall)
+				fmt.Printf(cfg.Wall) // HL
 			case '.':
-				fmt.Printf(cfg.Dot)
+				fmt.Printf(cfg.Dot) // HL
 			default:
-				fmt.Printf(cfg.Space)
+				fmt.Printf(cfg.Space) // HL
 			}
 		}
 		fmt.Printf("\n")
