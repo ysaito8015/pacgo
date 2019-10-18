@@ -38,6 +38,8 @@ In order to start, make sure you have Go installed in your system.
 
 If you don't, please follow the instructions in [golang.org](https://golang.org)
 
+[![Open in Cloud Shell](http://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fdanicat%2Fpacgo.git&cloudshell_open_in_editor=README.md&cloudshell_tutorial=README.md)
+
 ## How to use this tutorial
 
 In every step, including step 0 (this one), we will describe the task in the README.md file followed by the code that does it and an explanation of how it work.
